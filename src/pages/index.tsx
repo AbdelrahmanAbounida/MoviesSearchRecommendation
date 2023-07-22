@@ -86,16 +86,19 @@ export default function Search() {
   }
   const onSubmit = async(data: z.infer<typeof SearchFormSchema>) => {
 
+    setcurrentPage(1)
     setsearchKey(data.movieTitle)
     setUserSearchMovies(currentUser.uid,data.movieTitle)
     
-    getMovies(data.movieTitle)
+    
   }
   
   /* Update Movies with new page selected */
   useEffect(()=>{
     getMovies(searchKey)
-  },[currentPage])
+  },[currentPage,searchKey])
+
+  
 
   useEffect(()=>{
     if(!currentUser){
