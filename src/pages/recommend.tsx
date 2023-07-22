@@ -19,10 +19,6 @@ export default function Recommend() {
     const {date,setdate,recommendedmovies, setrecommendedmovies} = useSearchProps()
     const router = useRouter()
 
-
-    if(!currentUser){
-      router.push("/auth/login")
-    }
     const getRecommendedMovies = async ()=>{
 
       const searchedMovies = await getUserMovies(currentUser?.uid);
