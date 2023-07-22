@@ -8,11 +8,11 @@ const MovieDetail = ({movie}:any) => {
     const {currenUser} = useAuth()
   const router = useRouter()
   
-  useEffect(()=>{
-    if(!currenUser){
-      router.push("/auth/login")
-    }
-  },[currenUser])
+  // useEffect(()=>{
+  //   if(!currenUser){
+  //     router.push("/auth/login")
+  //   }
+  // },[currenUser])
   
   return (
     <div className='mx-auto w-3/4'>
