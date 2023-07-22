@@ -43,19 +43,28 @@ export default function Recommend() {
       }
 
       // 
-        let newrecommendedMovies = await getRecommendMovies(currentUser.uid)
-        console.log(newrecommendedMovies)
+        try{
+          let newrecommendedMovies = await getRecommendMovies(currentUser.uid)
+          console.log(newrecommendedMovies)
 
-        if(!newrecommendedMovies){
+          if(!newrecommendedMovies){
+            const res = await searchMoviesByTitle("popular",1)
+            newrecommendedMovies = res.Search
+            setrecommendedmovies(newrecommendedMovies?newrecommendedMovies:oldRecommendedMovies)
+          }
+          else{
+            setrecommendedmovies(newrecommendedMovies?newrecommendedMovies:oldRecommendedMovies)
+          }
+          updateUserRecommendedMovies(currentUser.uid,oldRecommendedMovies,newrecommendedMovies);
+          setdate(today)
+        }
+        catch(error){
           const res = await searchMoviesByTitle("popular",1)
-          newrecommendedMovies = res.Search
-          setrecommendedmovies(newrecommendedMovies?newrecommendedMovies:oldRecommendedMovies)
+          oldRecommendedMovies = res.Search
+          console.log("Updating recommendatoin")
+          updateUserRecommendedMovies(currentUser.uid,oldRecommendedMovies,oldRecommendedMovies);
+          setdate(today)
         }
-        else{
-          setrecommendedmovies(newrecommendedMovies?newrecommendedMovies:oldRecommendedMovies)
-        }
-        updateUserRecommendedMovies(currentUser.uid,oldRecommendedMovies,newrecommendedMovies);
-        setdate(today)
 
     }
 

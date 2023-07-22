@@ -11,6 +11,9 @@ import {BiShow,BiHide} from 'react-icons/bi'
 import { GoogleAuthProvider, UserCredential } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/components/ui/use-toast';
+import { ToastAction } from '@radix-ui/react-toast';
+import { Button } from '@/components/ui/button';
 
 const validationSchema = z.object({
     email: z.string().min(1, { message: "Email is required" }).email({
@@ -47,6 +50,7 @@ const Signin = () => {
 // handle Register *****************************************
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const {email,password} = data
+    console.log("data",data)
     try{
         setloading(true)
         await signup(email,password)
@@ -55,6 +59,12 @@ const Signin = () => {
     catch (e:any){
         setloading(false)
         seterror(e.code?.split("auth/")[1])
+        toast({
+          variant: "default",
+          title: "Failed to signup",
+          description:e.code?.split("auth/")[1],
+          action: <ToastAction className='' altText="Try again"><Button className='bg-red-500 hover:bg-red-600 text-white'>Try again</Button> </ToastAction>,
+        })
         // toast.error(e.code?.split("auth/")[1])
     }
     
@@ -107,10 +117,6 @@ const handleGoogleRegister = async()=>{
                           Signup With Google
                           </div>
                         </button>
-
-                  
-
-
 
                         <form className="space-y-4 md:space-y-6"  onSubmit={handleSubmit(onSubmit)} noValidate>
                             <div>

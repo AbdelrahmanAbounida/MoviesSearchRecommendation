@@ -11,6 +11,9 @@ import {BiShow,BiHide} from 'react-icons/bi'
 import { useAuth } from '@/context/AuthContext';
 import { GoogleAuthProvider, UserCredential } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+import { toast } from '@/components/ui/use-toast';
+import { ToastAction } from '@radix-ui/react-toast';
+import { Button } from '@/components/ui/button';
 
 const validationSchema = z.object({
     email: z.string().min(1, { message: "Email is required" }).email({
@@ -41,11 +44,18 @@ const Login = () => {
         // seterror('')
         setloading(true)
         await login(email,password)
+        router.push("/")
     }
     catch (e:any){
         setloading(false)
         seterror(e.code?.split("auth/")[1])
         // toast.error(e.code?.split("auth/")[1])
+        toast({
+          variant: "default",
+          title: "Failed to signup",
+          description:e.code?.split("auth/")[1],
+          action: <ToastAction className='' altText="Try again"><Button className='bg-red-500 hover:bg-red-600 text-white'>Try again</Button> </ToastAction>,
+        })
     }
     
     }
@@ -65,7 +75,12 @@ const handleGoogleLogin = async()=>{
     }).catch((error: FirebaseError) => {
       // const credential = GoogleAuthProvider.credentialFromError(error);
       seterror(error.code?.split("auth/")[1])
-      // toast.success("Account created")
+      toast({
+        variant: "default",
+        title: "Failed to signup",
+        description:error.code?.split("auth/")[1],
+        action: <ToastAction className='' altText="Try again"><Button className='bg-red-500 hover:bg-red-600 text-white'>Try again</Button> </ToastAction>,
+      })
     });
 }
 
@@ -108,7 +123,7 @@ const handleGoogleLogin = async()=>{
                         <form className=" space-y-4 md:space-y-6"  onSubmit={handleSubmit(onSubmit)} noValidate>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium  text-white">Your email</label>
-                                <input {...register("email")}  type="email" name="email" id="email" className={` border   sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-white  ${errors.email && "border-red-500"}`} placeholder="name@company.com" required />
+                                <input {...register("email")}  type="email" name="email" id="email" className={`border  sm:text-sm rounded-lg  focus:border-teal-600 block w-full p-2.5 bg-[#111111] border-[#525151] placeholder-gray-600 text-white   ${errors.email && "border-red-500"}`} placeholder="name@company.com" required />
                                 {errors.email && (
                                     <p className="text-xs italic text-red-500 mt-2">
                                         {errors.email?.message}
@@ -117,7 +132,7 @@ const handleGoogleLogin = async()=>{
                             </div>
                             <div className='relative'>
                                 <label htmlFor="password" className="block mb-2 text-sm font-medium  text-white">Password</label>
-                                <input {...register("password")}  type={showpass?"text":"password"} name="password" id="password" placeholder="••••••••" className={`bg-gray-50 border   sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-white  ${errors.password && "border-red-500"}`} required />
+                                <input {...register("password")}  type={showpass?"text":"password"} name="password" id="password" placeholder="••••••••" className={`border   sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 bg-[#111111] border-[#525151] placeholder-gray-600 text-white  ${errors.password && "border-red-500"}`} required />
                                 {errors.password && (
                                     <p className="text-xs italic text-red-500 mt-2">
                                         {errors.password?.message}
