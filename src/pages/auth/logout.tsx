@@ -14,6 +14,7 @@ const Logout = () => {
     }
     else{
       logout()
+      router.push("/")
     }
   },[currentUser])
 
