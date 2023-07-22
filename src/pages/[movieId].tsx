@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MoviePorps, Rating } from '@/lib/types';
 import { searchMoviesById } from '@/lib/search-movie';
 import { useAuth } from '@/context/AuthContext';
@@ -8,9 +8,12 @@ const MovieDetail = ({movie}:any) => {
     console.log(movie)
     const {currenUser} = useAuth()
   const router = useRouter()
-  if(!currenUser){
-    router.push("/auth/login")
-  }
+  
+  useEffect(()=>{
+    if(!currenUser){
+      router.push("/auth/login")
+    }
+  },[currenUser])
   
   return (
     <div className='mx-auto w-3/4'>
