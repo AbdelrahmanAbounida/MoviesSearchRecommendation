@@ -20,9 +20,12 @@ export default function Recommend() {
     const router = useRouter()
 
 
+    if(!currentUser){
+      router.push("/auth/login")
+    }
     const getRecommendedMovies = async ()=>{
 
-      const searchedMovies = await getUserMovies(currentUser.uid);
+      const searchedMovies = await getUserMovies(currentUser?.uid);
       const oldDate = searchedMovies?.date
       let oldRecommendedMovies = searchedMovies?.RecommendedMovies
       const today = new Date().toISOString().slice(0, 10);
