@@ -29,13 +29,9 @@ export default function Recommend() {
       
       // 
       if(today === oldDate){
-        console.log("Date still not change")
-        console.log(oldRecommendedMovies)
-
         if(!oldRecommendedMovies){
           const res = await searchMoviesByTitle("popular",1)
           oldRecommendedMovies = res.Search
-          console.log("Updating recommendatoin")
           updateUserRecommendedMovies(currentUser.uid,oldRecommendedMovies,oldRecommendedMovies);
         }
         setrecommendedmovies(oldRecommendedMovies)
@@ -45,7 +41,6 @@ export default function Recommend() {
       // 
         try{
           let newrecommendedMovies = await getRecommendMovies(currentUser.uid)
-          console.log(newrecommendedMovies)
 
           if(!newrecommendedMovies){
             const res = await searchMoviesByTitle("popular",1)
@@ -61,7 +56,6 @@ export default function Recommend() {
         catch(error){
           const res = await searchMoviesByTitle("popular",1)
           oldRecommendedMovies = res.Search
-          console.log("Updating recommendatoin")
           updateUserRecommendedMovies(currentUser.uid,oldRecommendedMovies,oldRecommendedMovies);
           setdate(today)
         }
@@ -76,7 +70,6 @@ export default function Recommend() {
   },[currentUser])
 
   useEffect(()=>{
-    console.log("Getting Recommend movies")
     getRecommendedMovies()
   },[])
 

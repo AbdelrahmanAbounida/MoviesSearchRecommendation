@@ -5,7 +5,6 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
 const MovieDetail = ({movie}:any) => {
-    console.log(movie)
     const {currenUser} = useAuth()
   const router = useRouter()
   
@@ -54,8 +53,6 @@ export async function getServerSideProps({ params }:any) {
   const { movieId } = params;
   try {
     const response = await searchMoviesById(movieId)
-
-    console.log(response)
     const movie = response;
     return {
       props: {

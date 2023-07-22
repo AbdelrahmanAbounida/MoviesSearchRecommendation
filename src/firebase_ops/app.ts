@@ -13,7 +13,6 @@ export const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_APP_ID,
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
 }
-console.log(firebaseConfig)
 export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const auth = getAuth(app)
@@ -57,10 +56,8 @@ export const setUserSearchMovies = async(userId:any,searchKey:string)=>{
 }
 
 export const getUserMovies = async(userId:any)=>{
-    console.log("User id",userId)
     const moviesDoc = await getDoc(doc(db, "SearchMovies", userId))
     if (moviesDoc.exists()) {
-      console.log(moviesDoc.data())
       return moviesDoc.data()
     }
     else{

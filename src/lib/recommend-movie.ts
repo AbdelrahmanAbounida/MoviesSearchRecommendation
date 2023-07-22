@@ -6,8 +6,6 @@ import { MoviePorps, SearchResult } from "./types";
 
 export const getRecommendMovies = async(userId:string)=>{
     // get all searched movies by user
-    console.log("Get Recommendation Movies")
-    console.log(process.env.NEXT_PUBLIC_OPENAI_API_KEY)
     const data = await getUserMovies(userId)
     const searchedMovies = data?.SearchedMovies
     const recommendedMovies = data?.recommendedMovies
@@ -34,7 +32,6 @@ export const getRecommendMovies = async(userId:string)=>{
                         [superman, spiderman,]
                         
                         `
-    console.log(BASE_PROMPT)
     try {
         const completion = await openai.createCompletion({
           model: "text-davinci-003",
@@ -42,11 +39,8 @@ export const getRecommendMovies = async(userId:string)=>{
           temperature:0.5,
           max_tokens: 1500
         });
-        console.log(completion)
-        console.log(completion.data.choices[0].text);
         const recommendedMoviesTitles =  completion.data.choices[0].text?.split(',')
         
-        console.log("recommendedMoviesTitles",recommendedMoviesTitles)
 
         if(recommendedMoviesTitles){
           const recommendedMovies = []
@@ -60,7 +54,6 @@ export const getRecommendMovies = async(userId:string)=>{
 
               const res:SearchResult = await searchMoviesByTitle(recommendedMovieTitle,1)
               const moviesData:MoviePorps[] = res.Search
-              console.log("RES is ",moviesData,recommendedMovieTitle)
               if(moviesData){
                 recommendedMovies.push(moviesData[0])
               }
@@ -70,7 +63,6 @@ export const getRecommendMovies = async(userId:string)=>{
         }
 
       } catch (error) {
-          console.log(error);
           return []
       }
 

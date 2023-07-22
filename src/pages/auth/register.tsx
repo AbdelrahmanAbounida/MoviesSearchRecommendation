@@ -50,7 +50,6 @@ const Signin = () => {
 // handle Register *****************************************
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const {email,password} = data
-    console.log("data",data)
     try{
         setloading(true)
         await signup(email,password)
@@ -78,14 +77,11 @@ const handleGoogleRegister = async()=>{
       const token = credential?.accessToken;
       const user = result.user;
 
-      console.log(user)
-      console.log(currentUser)
       setloading(false)
       router.push("/")
 
     }).catch((error: FirebaseError) => {
       const errorCode = error.code;
-      console.log(errorCode)
       const credential = GoogleAuthProvider.credentialFromError(error);
       seterror(error.code?.split("auth/")[1])
       // toast.success("Account created")

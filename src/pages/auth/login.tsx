@@ -39,7 +39,6 @@ const Login = () => {
   // handle Login *****************************************
   const onSubmit: SubmitHandler<ValidationSchema> = async (data) => {
     const {email,password} = data
-    console.log(data)
     try{
         // seterror('')
         setloading(true)
@@ -68,8 +67,6 @@ const handleGoogleLogin = async()=>{
       const token = credential?.accessToken;
       const user = result.user;
 
-      console.log(user)
-      console.log(currentUser)
       setloading(false)
       router.push("/")
     }).catch((error: FirebaseError) => {
@@ -86,11 +83,9 @@ const handleGoogleLogin = async()=>{
 
 
  useEffect(()=>{
-  console.log("Current user from login",currentUser)
 
   if(currentUser){
     // router.push("/")
-    console.log(currentUser)
   }
  },[currentUser])
 

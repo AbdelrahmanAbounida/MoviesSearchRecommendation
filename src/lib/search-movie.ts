@@ -2,7 +2,6 @@ import { MoviePorps, SearchResult } from "./types";
 
 
 export const searchMoviesByTitle = async (search_key:string,page:number):Promise<SearchResult> =>{
-    console.log("search_key",search_key)
     const API_KEY = process.env.NEXT_PUBLIC_OMDb_API_KEY
     const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${search_key}&page=${page}`;
     const response = await fetch(API_URL);

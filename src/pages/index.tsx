@@ -57,8 +57,6 @@ export default function Search() {
     try{
       
       if(!searchKey && !movieTitle){
-        console.log("Not SearchKey")
-        console.log(movies)
         setloading(false)
         return
       }
@@ -74,7 +72,6 @@ export default function Search() {
       setloading(false)
     } 
     catch(error){
-      console.log(error)
 
       toast({
         variant: "destructive",
